@@ -206,7 +206,6 @@ html {
 
 .about-img {
   width: 200vw;
-  animation: floatImage 4s ease-in-out infinite;
 }
 
 .heading {
@@ -981,6 +980,19 @@ form input, form textarea{
     margin-bottom: 3rem;
   }
 
+  .about-content h2{
+
+    text-align: center;
+  }
+  .about-content h3{
+
+    text-align: center;
+  }
+
+  .about-content p{
+
+    text-align: center;
+  }
   .portfolio h2{
 
     margin-bottom: 3rem;
@@ -1013,16 +1025,20 @@ form input, form textarea{
   }
 }
 
-@media (max-width: 365px){
+@media (max-width: 900px){
 
   .about img{
 
-    width: 90vw;
+    width: 70vw;
+    margin-top: 4rem;
   }
   .about-img img{
 
     width: 90vw;
+    place-items: center; /* Centers both horizontally and vertically */
+
   }
+  
 
   .footer{
 
