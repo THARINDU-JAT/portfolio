@@ -61,7 +61,7 @@ ScrollReveal({
   delay: 200 
  });
 
- ScrollReveal().reveal('.home-content, .heading', { origin:'top' });
+ ScrollReveal().reveal('.home-content, .heading, .heading-sub1', { origin:'top' });
  ScrollReveal().reveal('.home-img, .portfolio-box, .contact form, .skills-box, .certificates-box');
- ScrollReveal().reveal('.home-content h1, .about-img, .education-box, .contact-box1', { origin:'left' });
- ScrollReveal().reveal('.home-content p, .about-content, .services-box',{ origin:'right' });
+ ScrollReveal().reveal('.home-content h1, .about-img, .education-box, .title, .contact-box1', { origin:'left' });
+ ScrollReveal().reveal('.home-content p, .about-content, .services-box, .heading-sub', { origin:'right' });
