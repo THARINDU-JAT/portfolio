@@ -1,67 +1,116 @@
+/* ============================================================
+   THARINDU LAKSHAN — PORTFOLIO SCRIPT
+   ============================================================ */
+
+/* ── Typed.js ─────────────────────────────────────────────── */
 const typed = new Typed(".multiple-text", {
   strings: [
-    "IT Undergraduate .",
-    "Full Stack Developer .",
-    "Software Engineer .",
-    "Mobile App Developer .",
-    "Web Developer .",
+    "IT Undergraduate.",
+    "Full Stack Developer.",
+    "Software Engineer.",
+    "Mobile App Developer.",
+    "Web Developer.",
   ],
-  typeSpeed: 50,
-  backSpeed: 50,
-  backDelay: 1000,
+  typeSpeed: 60,
+  backSpeed: 40,
+  backDelay: 1400,
+  startDelay: 600,
   loop: true,
 });
 
+/* ── Mobile Navigation ────────────────────────────────────── */
+const menuBtn = document.getElementById("menu-icon");
+const navbar = document.getElementById("navbar");
 
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
+menuBtn.addEventListener("click", () => {
+  const isOpen = navbar.classList.toggle("active");
+  menuBtn.setAttribute("aria-expanded", isOpen);
+  menuBtn.querySelector("i").classList.toggle("bx-menu", !isOpen);
+  menuBtn.querySelector("i").classList.toggle("bx-x", isOpen);
+});
 
-menuIcon.onclick = () => {
-  menuIcon.classList.toggle('bx-x');
-  navbar.classList.toggle('active');
-};
-
-
-
-let sections = document.querySelectorAll('section');
-let navLinks = document.querySelectorAll('header nav a');
-
-window.onscroll = () => {
-  sections.forEach(sec => {
-
-    let top = window.scrollY;
-    let offset = sec.offsetTop - 150;
-    let height = sec.offsetHeight;
-    let id = sec.getAttribute('id');
-
-    if (top >= offset && top < offset + height) {
-
-      navLinks.forEach(links => {
-
-        links.classList.remove('active');
-
-        document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-      });
-    };
+/* Close mobile nav when a link is clicked */
+navbar.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    navbar.classList.remove("active");
+    menuBtn.querySelector("i").classList.add("bx-menu");
+    menuBtn.querySelector("i").classList.remove("bx-x");
+    menuBtn.setAttribute("aria-expanded", "false");
   });
+});
 
-  let header = document.querySelector('header');
+/* ── Active nav link + sticky header on scroll ────────────── */
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll("header nav a");
+const header = document.getElementById("header");
 
-  header.classList.toggle('sticky', window.scrollY > 100);
+function onScroll() {
+  const scrollY = window.scrollY;
 
-  menuIcon.classList.remove('bx-x');
-  navbar.classList.remove('active');
-};
+  /* Sticky header */
+  header.classList.toggle("sticky", scrollY > 80);
 
+  /* Highlight active nav link */
+  sections.forEach((sec) => {
+    const top = sec.offsetTop - 140;
+    const bottom = top + sec.offsetHeight;
+    const id = sec.getAttribute("id");
 
-ScrollReveal({ 
-  reset: true,
-  distance: '80px',
-  duration: 2000,
-  delay: 200 
- });
+    if (scrollY >= top && scrollY < bottom) {
+      navLinks.forEach((link) => link.classList.remove("active"));
+      const active = document.querySelector(`header nav a[href="#${id}"]`);
+      if (active) active.classList.add("active");
+    }
+  });
+}
 
- ScrollReveal().reveal('.home-content, .heading, .heading-sub1', { origin:'top' });
- ScrollReveal().reveal('.home-img, .portfolio-box, .contact form, .skills-box, .certificates-box');
- ScrollReveal().reveal('.home-content h1, .about-img, .education-box, .title, .contact-box1', { origin:'left' });
- ScrollReveal().reveal('.home-content p, .about-content, .services-box, .heading-sub', { origin:'right' });
+window.addEventListener("scroll", onScroll, { passive: true });
+
+/* ── ScrollReveal ─────────────────────────────────────────── */
+const sr = ScrollReveal({
+  reset: false, // reveal once for a cleaner feel
+  distance: "50px",
+  duration: 800,
+  delay: 100,
+  easing: "cubic-bezier(0.25, 0.1, 0.25, 1)",
+});
+
+/* Hero */
+sr.reveal(".home-greeting", { origin: "top", delay: 100 });
+sr.reveal(".home-name", { origin: "top", delay: 200 });
+sr.reveal(".home-role", { origin: "top", delay: 300 });
+sr.reveal(".home-bio", { origin: "top", delay: 400 });
+sr.reveal(".home-actions", { origin: "bottom", delay: 500 });
+sr.reveal(".home-img", { origin: "right", delay: 200 });
+
+/* About */
+sr.reveal(".about-img", { origin: "left" });
+sr.reveal(".about-content", { origin: "right" });
+
+/* Shared headings */
+sr.reveal(".section-title", { origin: "top" });
+sr.reveal(".section-sub", { origin: "top", delay: 150 });
+sr.reveal(".section-overline", { origin: "top" });
+
+/* Journey */
+sr.reveal(".col-title", { origin: "top" });
+sr.reveal(".timeline-item", { origin: "left", interval: 120 });
+
+/* Services */
+sr.reveal(".service-card", { origin: "bottom", interval: 120 });
+
+/* Skills */
+sr.reveal(".skill-item", { origin: "bottom", interval: 60 });
+
+/* Portfolio */
+sr.reveal(".portfolio-card", { origin: "bottom", interval: 120 });
+
+/* Certificates */
+sr.reveal(".cert-card", { origin: "bottom", interval: 100 });
+
+/* Contact */
+sr.reveal(".contact-info", { origin: "left" });
+sr.reveal(".contact-form-wrap", { origin: "right" });
+
+/* Footer */
+sr.reveal(".footer", { origin: "bottom" });
