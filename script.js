@@ -1,116 +1,79 @@
-/* ============================================================
-   THARINDU LAKSHAN — PORTFOLIO SCRIPT
-   ============================================================ */
-
-/* ── Typed.js ─────────────────────────────────────────────── */
+/* ── Typed.js ───────────────────────────────────────── */
 const typed = new Typed(".multiple-text", {
   strings: [
-    "IT Undergraduate.",
+    "IT graduate.",
     "Full Stack Developer.",
     "Software Engineer.",
     "Mobile App Developer.",
     "Web Developer.",
   ],
-  typeSpeed: 60,
+  typeSpeed: 55,
   backSpeed: 40,
-  backDelay: 1400,
-  startDelay: 600,
+  backDelay: 1200,
   loop: true,
 });
 
-/* ── Mobile Navigation ────────────────────────────────────── */
-const menuBtn = document.getElementById("menu-icon");
-const navbar = document.getElementById("navbar");
+/* ── Mobile menu ────────────────────────────────────── */
+const menuIcon = document.querySelector("#menu-icon");
+const navbar = document.querySelector(".navbar");
 
-menuBtn.addEventListener("click", () => {
-  const isOpen = navbar.classList.toggle("active");
-  menuBtn.setAttribute("aria-expanded", isOpen);
-  menuBtn.querySelector("i").classList.toggle("bx-menu", !isOpen);
-  menuBtn.querySelector("i").classList.toggle("bx-x", isOpen);
+menuIcon.addEventListener("click", () => {
+  menuIcon.classList.toggle("bx-x");
+  navbar.classList.toggle("active");
 });
 
-/* Close mobile nav when a link is clicked */
-navbar.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    navbar.classList.remove("active");
-    menuBtn.querySelector("i").classList.add("bx-menu");
-    menuBtn.querySelector("i").classList.remove("bx-x");
-    menuBtn.setAttribute("aria-expanded", "false");
-  });
-});
-
-/* ── Active nav link + sticky header on scroll ────────────── */
-const sections = document.querySelectorAll("section[id]");
+/* ── Active nav & sticky header ─────────────────────── */
+const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll("header nav a");
-const header = document.getElementById("header");
+const header = document.querySelector(".header");
 
-function onScroll() {
+window.addEventListener("scroll", () => {
   const scrollY = window.scrollY;
 
-  /* Sticky header */
+  /* sticky */
   header.classList.toggle("sticky", scrollY > 80);
 
-  /* Highlight active nav link */
+  /* close mobile menu on scroll */
+  menuIcon.classList.remove("bx-x");
+  navbar.classList.remove("active");
+
+  /* highlight active link */
   sections.forEach((sec) => {
-    const top = sec.offsetTop - 140;
-    const bottom = top + sec.offsetHeight;
+    const offset = sec.offsetTop - 160;
+    const height = sec.offsetHeight;
     const id = sec.getAttribute("id");
 
-    if (scrollY >= top && scrollY < bottom) {
-      navLinks.forEach((link) => link.classList.remove("active"));
-      const active = document.querySelector(`header nav a[href="#${id}"]`);
-      if (active) active.classList.add("active");
+    if (scrollY >= offset && scrollY < offset + height) {
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        const match = document.querySelector(`header nav a[href*="${id}"]`);
+        if (match) match.classList.add("active");
+      });
     }
   });
-}
-
-window.addEventListener("scroll", onScroll, { passive: true });
-
-/* ── ScrollReveal ─────────────────────────────────────────── */
-const sr = ScrollReveal({
-  reset: false, // reveal once for a cleaner feel
-  distance: "50px",
-  duration: 800,
-  delay: 100,
-  easing: "cubic-bezier(0.25, 0.1, 0.25, 1)",
 });
 
-/* Hero */
-sr.reveal(".home-greeting", { origin: "top", delay: 100 });
-sr.reveal(".home-name", { origin: "top", delay: 200 });
-sr.reveal(".home-role", { origin: "top", delay: 300 });
-sr.reveal(".home-bio", { origin: "top", delay: 400 });
-sr.reveal(".home-actions", { origin: "bottom", delay: 500 });
-sr.reveal(".home-img", { origin: "right", delay: 200 });
+/* ── ScrollReveal ───────────────────────────────────── */
+ScrollReveal({
+  reset: false, // fire once = smoother feel
+  distance: "60px",
+  duration: 900,
+  delay: 150,
+  easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+});
 
-/* About */
-sr.reveal(".about-img", { origin: "left" });
-sr.reveal(".about-content", { origin: "right" });
-
-/* Shared headings */
-sr.reveal(".section-title", { origin: "top" });
-sr.reveal(".section-sub", { origin: "top", delay: 150 });
-sr.reveal(".section-overline", { origin: "top" });
-
-/* Journey */
-sr.reveal(".col-title", { origin: "top" });
-sr.reveal(".timeline-item", { origin: "left", interval: 120 });
-
-/* Services */
-sr.reveal(".service-card", { origin: "bottom", interval: 120 });
-
-/* Skills */
-sr.reveal(".skill-item", { origin: "bottom", interval: 60 });
-
-/* Portfolio */
-sr.reveal(".portfolio-card", { origin: "bottom", interval: 120 });
-
-/* Certificates */
-sr.reveal(".cert-card", { origin: "bottom", interval: 100 });
-
-/* Contact */
-sr.reveal(".contact-info", { origin: "left" });
-sr.reveal(".contact-form-wrap", { origin: "right" });
-
-/* Footer */
-sr.reveal(".footer", { origin: "bottom" });
+ScrollReveal().reveal(".home-content, .heading, .heading-sub, .section-label", {
+  origin: "top",
+});
+ScrollReveal().reveal(
+  ".home-img, .portfolio-box, .skills-box, .certificates-box",
+  { origin: "bottom", interval: 80 },
+);
+ScrollReveal().reveal(
+  ".about-img, .education-box, .col-title, .contact-info-panel",
+  { origin: "left" },
+);
+ScrollReveal().reveal(".about-content, .services-box, .contact-form-panel", {
+  origin: "right",
+  interval: 100,
+});
